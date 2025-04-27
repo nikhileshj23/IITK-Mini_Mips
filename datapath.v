@@ -38,17 +38,6 @@ module datapath(input clk, input rst, input inst_load, input data_load, input [3
     assign take_jr = (opcode == 6'b000000 && func_code == 6'b001000);
     assign branch_offset ={{14{imm[15]}}, imm, 2'b00}; 
     
-//    program_counter pc_count(
-//        .clk(clk), 
-//        .rst(rst), 
-//        .pc(pc), 
-//        .take_branch(take_branch), 
-//        .take_jump(take_jump),
-//        .take_jr(take_jr),
-//        .jump_offset(offset),
-//        .branch_offset(branch_offset),
-//        .jr_addr(read_data1)
-//        );
 
     always@(posedge clk or posedge rst)begin
         if (rst) 
@@ -163,14 +152,6 @@ module datapath(input clk, input rst, input inst_load, input data_load, input [3
     wire [31:0] write_data;
     assign write_data = take_jal ? pc_plus_4 :(mem_to_reg ? memory_read_data : alu_result);
     
-//    data_memory dmem(
-//        .clk(clk), 
-//        .memRead(mem_read),
-//        .memWrite(mem_write),
-//        .address(alu_result),
-//        .write_data(read_data2),
-//        .read_data(memory_read_data)
-//    );
     wire [31:0] addr_data_mem;
     wire [31:0] addr_data_mem_to_write;
     assign addr_data_mem = data_load ? pc : alu_result;
